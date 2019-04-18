@@ -11,7 +11,8 @@ in your Vue components without memory leaks
 ## Usage
 
 This mixin adds setTimeout, setInterval and clearInterval to the components
-class instance. They take the same arguments as the native JS functions.
+class instance. They take the same arguments as the native JS functions, and
+return the same values.
 
 ```javascript
 import VueSetTimeout from '@netsells/vue-set-timeout';

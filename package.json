@@ -1,6 +1,6 @@
 {
   "name": "@netsells/vue-set-timeout",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Use setTimeout and setInterval safely in Vue",
   "main": "dist/index.js",
   "scripts": {
