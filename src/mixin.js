@@ -43,6 +43,17 @@ export default {
         },
 
         /**
+         * Remove a timer from internal tracking
+         *
+         * @private
+         *
+         * @param {Number} timerId
+         */
+        _removeTimer(timerId) {
+            this.$data._timerIds = this.$data._timerIds.filter(id => id !== timerId);
+        },
+
+        /**
          * Clear a timeout
          *
          * @param {Number} timerId
@@ -50,9 +61,22 @@ export default {
          * @returns {*}
          */
         clearTimeout(timerId) {
-            this.$data._timerIds = this.$data._timerIds.filter(id => id !== timerId);
+            this._removeTimer(timerId);
 
             return clearTimeout(timerId);
+        },
+
+        /**
+         * Clear an interval
+         *
+         * @param {Number} timerId
+         *
+         * @returns {*}
+         */
+        clearInterval(timerId) {
+            this._removeTimer(timerId);
+
+            return clearInterval(timerId);
         },
     },
 

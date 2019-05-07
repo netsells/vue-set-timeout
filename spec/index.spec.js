@@ -145,9 +145,9 @@ describe('VueSetTimeout', () => {
                 });
             });
 
-            describe('calling clearTimeout', () => {
+            describe('calling clearInterval', () => {
                 beforeEach(() => {
-                    wrapper.vm.clearTimeout(timer);
+                    wrapper.vm.clearInterval(timer);
                     jest.runOnlyPendingTimers();
                 });
 
