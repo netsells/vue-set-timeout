@@ -21,6 +21,35 @@ describe('VueSetTimeout', () => {
         callback = jest.fn();
     });
 
+    describe('after destroyed', () => {
+        let vm;
+
+        beforeEach(() => {
+            vm = wrapper.vm;
+            wrapper.destroy();
+        });
+
+        describe('when calling setTimeout', () => {
+            beforeEach(() => {
+                vm.setTimeout(callback, 150);
+            });
+
+            it('does not call the native setTimeout', () => {
+                expect(setTimeout).not.toHaveBeenCalled();
+            });
+        });
+
+        describe('when calling setInterval', () => {
+            beforeEach(() => {
+                vm.setInterval(callback, 150);
+            });
+
+            it('does not call the native setInterval', () => {
+                expect(setInterval).not.toHaveBeenCalled();
+            });
+        });
+    });
+
     describe('setTimeout', () => {
         beforeEach(() => {
             timer = wrapper.vm.setTimeout(callback, 150);

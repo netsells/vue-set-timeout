@@ -15,6 +15,10 @@ export default {
          * @returns {Number}
          */
         setTimeout(callback, timeout) {
+            if (!this.$data._timerIds) {
+                return null;
+            }
+
             const timer = setTimeout(() => {
                 this.clearTimeout(timer);
 
@@ -35,6 +39,10 @@ export default {
          * @returns {Number}
          */
         setInterval(callback, timeout) {
+            if (!this.$data._timerIds) {
+                return null;
+            }
+
             const timer = setInterval(callback, timeout);
 
             this.$data._timerIds.push(timer);
@@ -84,5 +92,7 @@ export default {
         this.$data._timerIds.forEach(id => {
             this.clearTimeout(id);
         });
+
+        this.$data._timerIds = null;
     },
 };
