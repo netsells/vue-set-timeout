@@ -5098,6 +5098,13 @@ stryker-api@^0.22.0:
   dependencies:
     tslib "~1.9.3"
 
+stryker-api@^0.24.1:
+  version "0.24.1"
+  resolved "https://registry.yarnpkg.com/stryker-api/-/stryker-api-0.24.1.tgz#4d970a60a3c00101683df172a2dc7b182cab97d1"
+  integrity sha512-7ar/+f96KXokhy8sT8EotUjt0+7hyeMpDQTQklWwhOkT6EHWLGYA1VBnYsrkn/KfSzNF8i6lUArBIJnyyfkc7A==
+  dependencies:
+    tslib "~1.9.3"
+
 stryker-babel-transpiler@^0.7.10:
   version "0.7.10"
   resolved "https://registry.yarnpkg.com/stryker-babel-transpiler/-/stryker-babel-transpiler-0.7.10.tgz#4f784851b1c288abd12960106a813dfb42d6463c"
@@ -5131,11 +5138,12 @@ stryker-javascript-mutator@^0.12.1:
     tslib "~1.9.3"
 
 stryker-jest-runner@^1.2.9:
-  version "1.2.9"
-  resolved "https://registry.yarnpkg.com/stryker-jest-runner/-/stryker-jest-runner-1.2.9.tgz#e2ec22def5f260e1b444356d96f8f9ab4e4ce41e"
-  integrity sha512-DN8gqSmm6hI0b44sx6HTo+wgKjRhm93DLpLkRt4SrZLEb42+BEq4wBQR7hyPB47UuQ9c5Oi/oL54LCrw0f1vjw==
+  version "1.4.1"
+  resolved "https://registry.yarnpkg.com/stryker-jest-runner/-/stryker-jest-runner-1.4.1.tgz#023c8bc83c179623f4cad8c88d9015608ee94c2f"
+  integrity sha512-LkFNqQ1ZDgjQ1TbYK6tcIhlxNU8a1JZc7T3gpkf+kbC/zwQMwYLTChuKWO69wpeQWXAdZjvV3ftpeiKYb3ZQog==
   dependencies:
     semver "~5.6.0"
+    stryker-api "^0.24.1"
 
 stryker@^0.33.1:
   version "0.33.1"
