@@ -1,3 +1,3 @@
-import VueSetTimeout from './mixin';
+import useTimeouts from './useTimeouts';
 
-export default VueSetTimeout;
+export default useTimeouts;
