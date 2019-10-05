@@ -14,88 +14,99 @@ const useTimeouts = () => {
         timerIds.value = timerIds.value.filter(id => id !== timerId);
     };
 
+    /**
+     * Set a single run timer
+     *
+     * @param {Function} callback
+     * @param {Number} timeout
+     *
+     * @returns {Number}
+     */
+    const setTimeoutInternal = (callback, timeout) => {
+        if (!timerIds.value) {
+            return;
+        }
+
+        const timer = setTimeout(() => {
+            clearTimeoutInternal(timer);
+
+            callback();
+        }, timeout);
+
+        timerIds.value.push(timer);
+
+        return timer;
+    };
+
+    /**
+     * Set an interval
+     *
+     * @param {Function} callback
+     * @param {Number} timeout
+     *
+     * @returns {Number}
+     */
+    const setIntervalInternal = (callback, timeout) => {
+        if (!timerIds.value) {
+            return;
+        }
+
+        const timer = setInterval(callback, timeout);
+
+        timerIds.value.push(timer);
+
+        return timer;
+    };
+
+    /**
+     * Clear a timeout
+     *
+     * @param {Number} timerId
+     *
+     * @returns {*}
+     */
+    const clearTimeoutInternal = timerId => {
+        removeTimer(timerId);
+
+        return clearTimeout(timerId);
+    };
+
+    /**
+     * Clear an interval
+     *
+     * @param {Number} timerId
+     *
+     * @returns {*}
+     */
+    const clearIntervalInternal = timerId => {
+        removeTimer(timerId);
+
+        return clearInterval(timerId);
+    };
+
+    const tearDownTimers = () => {
+        if (!timerIds.value) {
+            return;
+        }
+
+        timerIds.value.forEach(id => {
+            clearTimeout(id);
+        });
+
+        timerIds.value = null;
+    };
+
     onBeforeMount(() => {
         timerIds.value = [];
     });
 
-    onBeforeUnmount(() => {
-        timerIds.value.forEach(id => {
-            this.clearTimeout(id);
-        });
-
-        timerIds.value = null;
-    });
+    onBeforeUnmount(tearDownTimers);
 
     return {
-        /**
-         * Set a single run timer
-         *
-         * @param {Function} callback
-         * @param {Number} timeout
-         *
-         * @returns {Number}
-         */
-        setTimeout(callback, timeout) {
-            if (!timerIds.value) {
-                return;
-            }
-
-            const timer = setTimeout(() => {
-                this.clearTimeout(timer);
-
-                callback();
-            }, timeout);
-
-            timerIds.value.push(timer);
-
-            return timer;
-        },
-
-        /**
-         * Set an interval
-         *
-         * @param {Function} callback
-         * @param {Number} timeout
-         *
-         * @returns {Number}
-         */
-        setInterval(callback, timeout) {
-            if (!timerIds.value) {
-                return;
-            }
-
-            const timer = setInterval(callback, timeout);
-
-            timerIds.value.push(timer);
-
-            return timer;
-        },
-
-        /**
-         * Clear a timeout
-         *
-         * @param {Number} timerId
-         *
-         * @returns {*}
-         */
-        clearTimeout(timerId) {
-            removeTimer(timerId);
-
-            return clearTimeout(timerId);
-        },
-
-        /**
-         * Clear an interval
-         *
-         * @param {Number} timerId
-         *
-         * @returns {*}
-         */
-        clearInterval(timerId) {
-            removeTimer(timerId);
-
-            return clearInterval(timerId);
-        },
+        setTimeout: setTimeoutInternal,
+        setInterval: setIntervalInternal,
+        clearTimeout: clearTimeoutInternal,
+        clearInterval: clearIntervalInternal,
     };
 };
 
