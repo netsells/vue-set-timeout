@@ -1,5 +1,10 @@
 import { ref, onBeforeUnmount, onBeforeMount } from '@vue/composition-api';
 
+/**
+ * Get lifecycle aware JS timeout methods
+ *
+ * @returns {Object}
+ */
 const useTimeouts = () => {
     const timerIds = ref(null);
 
@@ -12,6 +17,32 @@ const useTimeouts = () => {
      */
     const removeTimer = timerId => {
         timerIds.value = timerIds.value.filter(id => id !== timerId);
+    };
+
+    /**
+     * Clear a timeout
+     *
+     * @param {Number} timerId
+     *
+     * @returns {*}
+     */
+    const clearTimeoutInternal = timerId => {
+        removeTimer(timerId);
+
+        return clearTimeout(timerId);
+    };
+
+    /**
+     * Clear an interval
+     *
+     * @param {Number} timerId
+     *
+     * @returns {*}
+     */
+    const clearIntervalInternal = timerId => {
+        removeTimer(timerId);
+
+        return clearInterval(timerId);
     };
 
     /**
@@ -56,32 +87,6 @@ const useTimeouts = () => {
         timerIds.value.push(timer);
 
         return timer;
-    };
-
-    /**
-     * Clear a timeout
-     *
-     * @param {Number} timerId
-     *
-     * @returns {*}
-     */
-    const clearTimeoutInternal = timerId => {
-        removeTimer(timerId);
-
-        return clearTimeout(timerId);
-    };
-
-    /**
-     * Clear an interval
-     *
-     * @param {Number} timerId
-     *
-     * @returns {*}
-     */
-    const clearIntervalInternal = timerId => {
-        removeTimer(timerId);
-
-        return clearInterval(timerId);
     };
 
     onBeforeMount(() => {

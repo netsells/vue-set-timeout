@@ -12,6 +12,11 @@ describe('useTimeouts', () => {
     const component = {
         template: '<div />',
 
+        /**
+         * Setup the timeout composition
+         *
+         * @returns {Object}
+         */
         setup() {
             return useTimeouts();
         },
