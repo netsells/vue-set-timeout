@@ -61,5 +61,8 @@
         "statements": 100
       }
     }
+  },
+  "dependencies": {
+    "@vue/composition-api": "^0.3.2"
   }
 }

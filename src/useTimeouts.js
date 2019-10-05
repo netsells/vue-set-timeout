@@ -1,11 +1,32 @@
-export default {
-    data() {
-        return {
-            _timerIds: [],
-        };
-    },
+import { ref, onBeforeUnmount, onBeforeMount } from '@vue/composition-api';
 
-    methods: {
+const useTimeouts = () => {
+    const timerIds = ref(null);
+
+    /**
+     * Remove a timer from internal tracking
+     *
+     * @private
+     *
+     * @param {Number} timerId
+     */
+    const removeTimer = timerId => {
+        timerIds.value = timerIds.value.filter(id => id !== timerId);
+    };
+
+    onBeforeMount(() => {
+        timerIds.value = [];
+    });
+
+    onBeforeUnmount(() => {
+        timerIds.value.forEach(id => {
+            this.clearTimeout(id);
+        });
+
+        timerIds.value = null;
+    });
+
+    return {
         /**
          * Set a single run timer
          *
@@ -15,8 +36,8 @@ export default {
          * @returns {Number}
          */
         setTimeout(callback, timeout) {
-            if (!this.$data._timerIds) {
-                return null;
+            if (!timerIds.value) {
+                return;
             }
 
             const timer = setTimeout(() => {
@@ -25,7 +46,7 @@ export default {
                 callback();
             }, timeout);
 
-            this.$data._timerIds.push(timer);
+            timerIds.value.push(timer);
 
             return timer;
         },
@@ -39,26 +60,15 @@ export default {
          * @returns {Number}
          */
         setInterval(callback, timeout) {
-            if (!this.$data._timerIds) {
-                return null;
+            if (!timerIds.value) {
+                return;
             }
 
             const timer = setInterval(callback, timeout);
 
-            this.$data._timerIds.push(timer);
+            timerIds.value.push(timer);
 
             return timer;
-        },
-
-        /**
-         * Remove a timer from internal tracking
-         *
-         * @private
-         *
-         * @param {Number} timerId
-         */
-        _removeTimer(timerId) {
-            this.$data._timerIds = this.$data._timerIds.filter(id => id !== timerId);
         },
 
         /**
@@ -69,7 +79,7 @@ export default {
          * @returns {*}
          */
         clearTimeout(timerId) {
-            this._removeTimer(timerId);
+            removeTimer(timerId);
 
             return clearTimeout(timerId);
         },
@@ -82,17 +92,11 @@ export default {
          * @returns {*}
          */
         clearInterval(timerId) {
-            this._removeTimer(timerId);
+            removeTimer(timerId);
 
             return clearInterval(timerId);
         },
-    },
-
-    beforeDestroy() {
-        this.$data._timerIds.forEach(id => {
-            this.clearTimeout(id);
-        });
-
-        this.$data._timerIds = null;
-    },
+    };
 };
+
+export default useTimeouts;

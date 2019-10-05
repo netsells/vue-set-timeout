@@ -1,14 +1,20 @@
 import { mount } from '@vue/test-utils';
+import Vue from 'vue';
+import VueCompositionApi from '@vue/composition-api';
 
-import VueSetTimeout from '../src/index';
+import useTimeouts from '../src/index';
+
+Vue.use(VueCompositionApi);
 
 jest.useFakeTimers();
 
-describe('VueSetTimeout', () => {
+describe('useTimeouts', () => {
     const component = {
         template: '<div />',
 
-        mixins: [VueSetTimeout],
+        setup() {
+            return useTimeouts();
+        },
     };
 
     let wrapper;
