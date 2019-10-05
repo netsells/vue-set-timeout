@@ -84,23 +84,17 @@ const useTimeouts = () => {
         return clearInterval(timerId);
     };
 
-    const tearDownTimers = () => {
-        if (!timerIds.value) {
-            return;
-        }
+    onBeforeMount(() => {
+        timerIds.value = [];
+    });
 
+    onBeforeUnmount(() => {
         timerIds.value.forEach(id => {
             clearTimeout(id);
         });
 
         timerIds.value = null;
-    };
-
-    onBeforeMount(() => {
-        timerIds.value = [];
     });
-
-    onBeforeUnmount(tearDownTimers);
 
     return {
         setTimeout: setTimeoutInternal,
