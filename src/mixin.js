@@ -89,7 +89,7 @@ export default {
     },
 
     beforeDestroy() {
-        if (this.$data._timerIds !== null) {
+        if (this.$data._timerIds) {
             this.$data._timerIds.forEach(id => {
                 this.clearTimeout(id);
             });
