@@ -89,10 +89,12 @@ export default {
     },
 
     beforeDestroy() {
-        this.$data._timerIds.forEach(id => {
-            this.clearTimeout(id);
-        });
+        if (this.$data._timerIds) {
+            this.$data._timerIds.forEach(id => {
+                this.clearTimeout(id);
+            });
 
-        this.$data._timerIds = null;
+            this.$data._timerIds = null;
+        }
     },
 };

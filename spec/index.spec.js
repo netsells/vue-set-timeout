@@ -50,6 +50,18 @@ describe('VueSetTimeout', () => {
         });
     });
 
+    describe('when timerIds set to null', () => {
+        beforeEach(() => {
+            wrapper.vm.$data._timerIds = null;
+        });
+
+        it('can be destroyed without erroring', () => {
+            expect(() => {
+                wrapper.destroy();
+            }).not.toThrow();
+        });
+    });
+
     describe('setTimeout', () => {
         beforeEach(() => {
             timer = wrapper.vm.setTimeout(callback, 150);
